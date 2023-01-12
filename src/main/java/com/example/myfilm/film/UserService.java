@@ -1,6 +1,6 @@
-package ru.practicum.shareit.user;
+package com.example.myfilm.film;
 
-import ru.practicum.shareit.user.model.User;
+import com.example.myfilm.film.model.User;
 
 import java.util.List;
 

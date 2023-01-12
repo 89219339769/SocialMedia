@@ -1,10 +1,9 @@
-package com.example.myfilm.user.controller;
+package com.example.myfilm.film;
 
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.shareit.user.UserService;
-import ru.practicum.shareit.user.model.User;
+import com.example.myfilm.film.model.User;
 
 import java.util.List;
 

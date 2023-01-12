@@ -1,12 +1,13 @@
-package com.example.myfilm;
+package com.example.myfilm.film;
 
-import com.example.myfilm.user.controller.UserRepository;
+import com.example.myfilm.film.UserRepository;
+import com.example.myfilm.film.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import ru.practicum.shareit.exceptions.NotFoundException;
-import ru.practicum.shareit.user.model.User;
+import com.example.myfilm.film.model.User;
 
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 
-public class UserServiceImpl implements ru.practicum.shareit.user.UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
 

@@ -1,4 +1,4 @@
-package ru.practicum.shareit.user.model;
+package com.example.myfilm.film.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
