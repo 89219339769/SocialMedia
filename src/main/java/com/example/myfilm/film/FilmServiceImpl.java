@@ -14,6 +14,7 @@ import com.example.myfilm.film.model.Film;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -39,10 +40,18 @@ public class FilmServiceImpl implements FilmService {
 
 
         Collection<Rate> rates = rateRepository.findAllByFilmIdIs(id);
+        List<Integer> average = rates.stream()
+                .map(rate -> rate.getRate())
+                .collect(Collectors.toList());
 
+        int sum = 0;
+        for (Integer rage : average) {
+            sum = sum + rage;
+        }
+        int averageRnge = sum / average.size();
 
         FilmDto filmDto = Mapper.toFilmDto(film);
-        filmDto.setRates(rates);
+        filmDto.setAverageRates(averageRnge);
         return filmDto;
 
     }

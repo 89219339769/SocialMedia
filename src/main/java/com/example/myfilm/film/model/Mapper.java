@@ -13,7 +13,7 @@ public class Mapper {
         return FilmDto.builder()
                 .id(film.getId())
                 .name(film.getName())
-                .rates(new ArrayList<>())
+                .averageRates(0)
                 .build();
     }
 

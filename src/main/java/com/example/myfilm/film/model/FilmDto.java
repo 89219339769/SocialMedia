@@ -27,6 +27,6 @@ public class FilmDto {
 
     private String description;
 
-    private Collection<Rate> rates;
+   private Integer averageRates;
 
 }
