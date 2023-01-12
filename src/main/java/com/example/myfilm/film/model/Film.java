@@ -9,11 +9,11 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "users", schema = "public")
+@Table(name = "films", schema = "public")
 @AllArgsConstructor
 @NoArgsConstructor
 public
-class User {
+class Film {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,6 @@ class User {
     private String name;
 
     @Column(unique = true, length = 100, nullable = false)
-    private String email;
+    private String description;
 
 }
