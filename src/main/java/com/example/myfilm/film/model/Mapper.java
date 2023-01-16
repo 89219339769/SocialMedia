@@ -14,7 +14,7 @@ public class Mapper {
                 .id(film.getId())
                 .name(film.getName())
                 .description(film.getDescription())
-                .averageRates(0)
+                .averageRates(0.0)
                 .build();
     }
 

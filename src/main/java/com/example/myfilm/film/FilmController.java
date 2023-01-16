@@ -5,9 +5,15 @@ import com.example.myfilm.film.model.FilmDto;
 import com.example.myfilm.rate.Rate;
 import com.example.myfilm.rate.RateService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import com.example.myfilm.film.model.Film;
 
+
+import javax.xml.bind.annotation.XmlType;
 import java.util.List;
 
 
@@ -46,6 +52,8 @@ public class FilmController {
 
     @GetMapping
     public List<FilmDto> getAll() {
+
+
         return filmService.getAllFilms();
     }
 

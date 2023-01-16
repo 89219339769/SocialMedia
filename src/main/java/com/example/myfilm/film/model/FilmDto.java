@@ -27,6 +27,6 @@ public class FilmDto {
 
     private String description;
 
-   private Integer averageRates;
+   private Double averageRates;
 
 }

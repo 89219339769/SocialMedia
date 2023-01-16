@@ -6,7 +6,12 @@ import com.example.myfilm.rate.Rate;
 import com.example.myfilm.rate.RateRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import ru.practicum.shareit.exceptions.NotFoundException;
 import com.example.myfilm.film.model.Film;
@@ -47,13 +52,13 @@ public class FilmServiceImpl implements FilmService {
                 .map(rate -> rate.getRate())
                 .collect(Collectors.toList());
 
-        int sum = 0;
+        Double sum = 0.0;
         for (Integer rage : average) {
             sum = sum + rage;
         }
-        int averageRnge =0;
-        if( average.size()!=0) {
-             averageRnge = sum / average.size();
+        Double averageRnge = 0.0;
+        if (average.size() != 0) {
+            averageRnge = sum / average.size();
         }
 
         FilmDto filmDto = Mapper.toFilmDto(film);
@@ -71,10 +76,12 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public List<FilmDto> getAllFilms() {
-
-
+//сортируем от большего к меньшему по номерам
+        Pageable pageable1 = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "id"));
         Collection<Rate> rates = rateRepository.findAll();
-        List<Film> films = repository.findAll();
+       Page<Film> films = repository.findAll(pageable1);
+
+
         List<FilmDto> filmDtos = new ArrayList<>();
         for (Film film : films) {
             Collection<Rate> ratesForDto;
@@ -89,12 +96,12 @@ public class FilmServiceImpl implements FilmService {
                     .map(rate -> rate.getRate())
                     .collect(Collectors.toList());
 
-            int sum = 0;
+            Double sum = 0.0;
             for (Integer rage : average) {
                 sum = sum + rage;
             }
-            int averageRnge =0;
-            if( average.size()!=0) {
+            Double averageRnge = 0.0;
+            if (average.size() != 0) {
                 averageRnge = sum / average.size();
             }
 
