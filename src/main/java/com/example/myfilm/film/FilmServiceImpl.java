@@ -12,6 +12,7 @@ import ru.practicum.shareit.exceptions.NotFoundException;
 import com.example.myfilm.film.model.Film;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,6 +41,8 @@ public class FilmServiceImpl implements FilmService {
 
 
         Collection<Rate> rates = rateRepository.findAllByFilmIdIs(id);
+
+
         List<Integer> average = rates.stream()
                 .map(rate -> rate.getRate())
                 .collect(Collectors.toList());
@@ -48,7 +51,10 @@ public class FilmServiceImpl implements FilmService {
         for (Integer rage : average) {
             sum = sum + rage;
         }
-        int averageRnge = sum / average.size();
+        int averageRnge =0;
+        if( average.size()!=0) {
+             averageRnge = sum / average.size();
+        }
 
         FilmDto filmDto = Mapper.toFilmDto(film);
         filmDto.setAverageRates(averageRnge);
@@ -64,7 +70,40 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<Film> getAllUsers() {
-        return repository.findAll();
+    public List<FilmDto> getAllFilms() {
+
+
+        Collection<Rate> rates = rateRepository.findAll();
+        List<Film> films = repository.findAll();
+        List<FilmDto> filmDtos = new ArrayList<>();
+        for (Film film : films) {
+            Collection<Rate> ratesForDto;
+            ratesForDto = rates.stream()
+                    .filter(rate -> rate.getFilm().getId().equals(film.getId()))
+                    .collect(Collectors.toList());
+
+            FilmDto filmDto = Mapper.toFilmDto(film);
+
+
+            List<Integer> average = ratesForDto.stream()
+                    .map(rate -> rate.getRate())
+                    .collect(Collectors.toList());
+
+            int sum = 0;
+            for (Integer rage : average) {
+                sum = sum + rage;
+            }
+            int averageRnge =0;
+            if( average.size()!=0) {
+                averageRnge = sum / average.size();
+            }
+
+            filmDto.setAverageRates(averageRnge);
+            filmDtos.add(filmDto);
+
+        }
+
+
+        return filmDtos;
     }
 }

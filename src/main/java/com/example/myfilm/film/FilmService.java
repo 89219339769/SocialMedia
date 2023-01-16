@@ -8,7 +8,7 @@ import java.util.List;
 public interface FilmService {
     Film save(Film film);
 
-    List<Film> getAllUsers();
+    List<FilmDto> getAllFilms();
 
     FilmDto get(Long id);
 
