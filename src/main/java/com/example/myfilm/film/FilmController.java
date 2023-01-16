@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.myfilm.film.model.Film;
 
@@ -51,10 +52,15 @@ public class FilmController {
 
 
     @GetMapping
-    public List<FilmDto> getAll() {
+    public ResponseEntity<Page<FilmDto>> getAll(@RequestParam (defaultValue = "0") int from,
+                                                @RequestParam (defaultValue = "100") int size,
+                                                Pageable pageable) {
+        Page<FilmDto> allFilms =  filmService.getAllFilms(from, size, pageable);
+        allFilms.getTotalElements();
+        allFilms.getTotalPages();
 
 
-        return filmService.getAllFilms();
+        return ResponseEntity.ok( allFilms);
     }
 
 

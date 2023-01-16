@@ -6,12 +6,8 @@ import com.example.myfilm.rate.Rate;
 import com.example.myfilm.rate.RateRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 import ru.practicum.shareit.exceptions.NotFoundException;
 import com.example.myfilm.film.model.Film;
@@ -75,11 +71,11 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<FilmDto> getAllFilms() {
-//сортируем от большего к меньшему по номерам
-        Pageable pageable1 = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "id"));
+    public Page<FilmDto> getAllFilms(int from, int size,Pageable pageable ) {
+//сортируем от большего к меньшему по номерам нужно на DESC поменять
+        Pageable pageable1 = PageRequest.of(from, size, Sort.by(Sort.Direction.ASC, "id"));
         Collection<Rate> rates = rateRepository.findAll();
-       Page<Film> films = repository.findAll(pageable1);
+        Page<Film> films = repository.findAll(pageable1);
 
 
         List<FilmDto> filmDtos = new ArrayList<>();
@@ -110,7 +106,7 @@ public class FilmServiceImpl implements FilmService {
 
         }
 
-
-        return filmDtos;
+        Page<FilmDto> page = new PageImpl<>(filmDtos);
+        return page;
     }
 }
