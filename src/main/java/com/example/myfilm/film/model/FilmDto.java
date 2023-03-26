@@ -1,6 +1,6 @@
 package com.example.myfilm.film.model;
 
-import com.example.myfilm.rate.Rate;
+//import com.example.myfilm.rate.Rate;
 import lombok.*;
 
 import javax.persistence.Column;

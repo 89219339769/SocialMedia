@@ -2,8 +2,8 @@ package com.example.myfilm.film;
 
 
 import com.example.myfilm.film.model.FilmDto;
-import com.example.myfilm.rate.Rate;
-import com.example.myfilm.rate.RateService;
+//import com.example.myfilm.rate.Rate;
+//import com.example.myfilm.rate.RateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +25,7 @@ public class FilmController {
 
     private final FilmService filmService;
 
-    private final RateService rateService;
+   // private final RateService rateService;
 
 
 
@@ -35,12 +35,12 @@ public class FilmController {
     }
 
 
-    @PostMapping("/{filmId}/rate")
-    public Rate add(@RequestHeader("X-Sharer-User-Id") Long userId,
-                    @PathVariable Long filmId,
-                    @RequestBody Rate rate) {
-        return rateService.addRate(userId, filmId, rate);
-    }
+//    @PostMapping("/{filmId}/rate")
+//    public Rate add(@RequestHeader("X-Sharer-User-Id") Long userId,
+//                    @PathVariable Long filmId,
+//                    @RequestBody Rate rate) {
+//        return rateService.addRate(userId, filmId, rate);
+//    }
 
 
     @GetMapping("/{id}")
