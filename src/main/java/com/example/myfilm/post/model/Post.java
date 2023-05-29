@@ -35,19 +35,17 @@ public class Post {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
-    mappedBy = "product")
-    private List<Image> images = new ArrayList<>();
+
     private Long previewImageId;
     private LocalDateTime dateOfCreated;
+
+    @Column(name = "user_name", nullable = false)
+    private String userName;
 
     private void init() {
         dateOfCreated = LocalDateTime.now();
     }
 
 
-    public void addImageToProduct(Image image) {
-        image.setProduct(this);
-        images.add(image);
-    }
+
 }

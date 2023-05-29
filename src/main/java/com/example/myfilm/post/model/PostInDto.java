@@ -19,5 +19,4 @@ public class PostInDto {
 
     private String description;
 
-
 }

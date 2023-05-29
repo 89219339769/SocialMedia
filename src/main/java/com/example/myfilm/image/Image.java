@@ -34,10 +34,15 @@ public class Image {
     private Long size;
     @Column(name = "contentType")
     private String contentType;
-    @Column(name = "isPreviewImage")
-    private boolean isPreviewImage;
+
+    @Column(name = "user_name")
+    private String userName;
     @Lob
     private byte[] bytes;
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Post product;
+
+    //вторичный ключ номер поста
+    // @ManyToOne
+    //    @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
+    //    private Post post;
+
 }

@@ -2,6 +2,7 @@ package com.example.myfilm.security;//package com.pokemonreview.api.security;
 //
 
 import com.example.myfilm.user.CustomUserDetailsService;
+import com.example.myfilm.user.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -67,6 +70,21 @@ public class SecurityConfig {
     public JWTAuthenticationFilter jWTAuthenticationFilter() {
         return new JWTAuthenticationFilter();
     }
+
+
+
+//    public static UserEntity getActiveUser() {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        if (auth != null) {
+//            Object user = auth.getPrincipal().getClass();
+//
+//                return (UserEntity)user;
+//
+//        }
+
+    //    throw new RuntimeException("no active user");
+//    }
+
 }
 
 
