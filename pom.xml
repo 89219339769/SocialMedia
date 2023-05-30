@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.example.myfilm</groupId>
-    <artifactId>myfilm</artifactId>
+    <artifactId>social</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>myfilm</name>

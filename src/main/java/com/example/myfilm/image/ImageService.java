@@ -34,7 +34,7 @@ public class ImageService {
         if (currentUserName == null) {
             throw new RuntimeException("unable to save picture, user does not exist");
         }
-//нужно взять список id постов у который userName Slava (активный пользователь
+
         List<Post> posts = postRepository.findPostsByUsername(currentUserName);
         boolean isPr = false;
         for (var post : posts) {

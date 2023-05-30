@@ -31,24 +31,6 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public void savePicture(MultipartFile file) throws IOException {
-        Image image1;
-        image1 = toImageEntity(file);
-
-
-        log.info("Saving new Product. Title: {}; Author: {}");
-
-    }
-
-    private Image toImageEntity(MultipartFile file) throws IOException {
-        Image image = new Image();
-        image.setName(file.getName());
-        image.setOriginalFileName(file.getOriginalFilename());
-        image.setContentType(file.getContentType());
-        image.setSize(file.getSize());
-        image.setBytes(file.getBytes());
-        return image;
-    }
 
     public void deleteProduct(Long id) {
         postRepository.deleteById(id);
