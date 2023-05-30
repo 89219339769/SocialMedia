@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,9 +47,9 @@ public class PostController {
 //    }
 
 
-    @PostMapping("/addPicture")
-    public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException {
-        imageService.savePicture(file);
+    @PostMapping("/addPicture/{postId}")
+    public ResponseEntity<String> addPicture(@RequestParam("file") MultipartFile file, @PathVariable Long postId) throws IOException {
+        imageService.savePicture(file, postId);
         return ResponseEntity.ok().body("file received successfully");
     }
 

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,26 +27,24 @@ public class ImageService {
     private final PostRepository postRepository;
 
 
-    public void savePicture(MultipartFile file) throws IOException {
+    public void savePicture(MultipartFile file, Long postId) throws IOException {
         Image image;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName =authentication.getName();
-
+        String currentUserName = authentication.getName();
         if (currentUserName == null) {
             throw new RuntimeException("unable to save picture, user does not exist");
         }
 //нужно взять список id постов у который userName Slava (активный пользователь
-        // в эндпоинт добавить номер поста если он совпадает с одним из списка
-        // сщхранили картинку и номер поста вторичный ключ
-
-       Optional<Post> post = postRepository.findByUsername(currentUserName);
-       if(post.isEmpty()){
-           throw new RuntimeException("unable to save picture, post does not exist");
-       }
-
-
-        image = toImageEntity(file);
-        imageRepository.save(image);
+        List<Post> posts = postRepository.findPostsByUsername(currentUserName);
+        boolean isPr = false;
+        for (var post : posts) {
+            if (post.getId() == postId) {
+                image = toImageEntity(file);
+                imageRepository.save(image);
+                isPr = true;
+            }
+        }
+        if (isPr==false) throw new RuntimeException("no post number" + postId + " found");
     }
 
     private Image toImageEntity(MultipartFile file) throws IOException {
