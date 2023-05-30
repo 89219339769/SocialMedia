@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -40,9 +41,9 @@ public class Image {
     @Lob
     private byte[] bytes;
 
-    //вторичный ключ номер поста
-    // @ManyToOne
-    //    @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
-    //    private Post post;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
+    private Post post;
 
 }

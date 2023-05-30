@@ -31,20 +31,22 @@ public class ImageService {
         Image image;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
-        if (currentUserName == null) {
-            throw new RuntimeException("unable to save picture, user does not exist");
-        }
 
         List<Post> posts = postRepository.findPostsByUsername(currentUserName);
         boolean isPr = false;
-        for (var post : posts) {
-            if (post.getId() == postId) {
+        for (var userPost : posts) {
+            if (userPost.getId() == postId) {
+
+                Post post = postRepository.findById(postId)
+                                          .orElseThrow(() -> new RuntimeException(
+                                                  "user with id = " + postId + " not found"));
                 image = toImageEntity(file);
+                image.setPost(post);
                 imageRepository.save(image);
                 isPr = true;
             }
         }
-        if (isPr==false) throw new RuntimeException("no post number" + postId + " found");
+        if (!isPr) throw new RuntimeException("no post number " + postId + " found");
     }
 
     private Image toImageEntity(MultipartFile file) throws IOException {
@@ -56,8 +58,6 @@ public class ImageService {
         image.setBytes(file.getBytes());
         return image;
     }
-
-
 
 
 }

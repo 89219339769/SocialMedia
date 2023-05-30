@@ -1,6 +1,7 @@
 package com.example.myfilm.post.model;
 
 import com.example.myfilm.image.Image;
+import com.example.myfilm.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
@@ -42,9 +44,7 @@ public class Post {
     @Column(name = "user_name", nullable = false)
     private String userName;
 
-    private void init() {
-        dateOfCreated = LocalDateTime.now();
-    }
+
 
 
 
