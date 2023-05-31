@@ -1,6 +1,5 @@
 package com.example.myfilm.message;
 
-
 import com.example.myfilm.message.model.Mapping;
 import com.example.myfilm.message.model.Message;
 import com.example.myfilm.message.model.MessageDto;
@@ -23,6 +22,7 @@ public class MessageService {
 
     private final MessageRepo messageRepo;
     private final UserRepository userRepository;
+
     public void sendMessage(Long resId, String text) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
@@ -35,7 +35,7 @@ public class MessageService {
         message.setSender(userSend.get());
         message.setRecipient(userRec);
         message.setText(text);
-        messageRepo.save( message);
+        messageRepo.save(message);
     }
 
     public List<MessageDto> receiveMessage() {
@@ -43,9 +43,9 @@ public class MessageService {
         String currentUserName = authentication.getName();
         Optional<UserEntity> userRec = userRepository.findByUsername(currentUserName);
 
-        List<Message>messages = messageRepo.findAllByResId(userRec.get().getId());
-        List<MessageDto>messageDtos = new ArrayList<>();
-        for (var message: messages)
+        List<Message> messages = messageRepo.findAllByResId(userRec.get().getId());
+        List<MessageDto> messageDtos = new ArrayList<>();
+        for (var message : messages)
             messageDtos.add(Mapping.toMessageDto(message, message.getSender()));
         return messageDtos;
 
@@ -56,9 +56,9 @@ public class MessageService {
         String currentUserName = authentication.getName();
         Optional<UserEntity> userRec = userRepository.findByUsername(currentUserName);
         Integer userRecId = userRec.get().getId();
-        List<Message>messages = messageRepo.findMessagesByRecAndSend(userRecId, Math.toIntExact(userId));
-        List<MessageDto>messageDtos = new ArrayList<>();
-        for (var message: messages)
+        List<Message> messages = messageRepo.findMessagesByRecAndSend(userRecId, Math.toIntExact(userId));
+        List<MessageDto> messageDtos = new ArrayList<>();
+        for (var message : messages)
             messageDtos.add(Mapping.toMessageDto(message, message.getSender()));
         return messageDtos;
     }

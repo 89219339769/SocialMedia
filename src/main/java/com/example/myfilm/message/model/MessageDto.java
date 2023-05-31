@@ -9,9 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class MessageDto {
-
     private String senderName;
-
     private String text;
-
 }

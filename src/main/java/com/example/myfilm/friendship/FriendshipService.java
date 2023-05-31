@@ -25,14 +25,11 @@ import java.util.Optional;
 public class FriendshipService {
 
     private final FollowersRepo followersRepo;
-
     private final FriendshipRepo friendshipRepo;
     private final UserRepository userRepository;
-
     private final PostRepository postRepository;
 
     public void addFriend(Long friendId) {
-
         Followers followers = new Followers();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
@@ -88,8 +85,6 @@ public class FriendshipService {
         }
 
         Pageable pageable = PageRequest.of(from, size, Sort.by(Sort.Direction.DESC, "dateOfCreated"));
-
-
         List<Post> posts = postRepository.searchAllByUserNames(userNames, pageable);
         return posts;
     }

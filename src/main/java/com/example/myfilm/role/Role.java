@@ -1,8 +1,5 @@
 package com.example.myfilm.role;
 
-
-
-
 import lombok.Getter;
 import lombok.Setter;
 

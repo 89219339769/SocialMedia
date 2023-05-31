@@ -1,4 +1,4 @@
-package ru.practicum.shareit.exceptions;
+package com.example.myfilm.exceptions;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String message) {

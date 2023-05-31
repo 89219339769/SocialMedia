@@ -3,12 +3,8 @@ package com.example.myfilm.image;
 
 import com.example.myfilm.post.PostRepository;
 import com.example.myfilm.post.model.Post;
-import com.example.myfilm.security.SecurityConfig;
-import com.example.myfilm.user.UserEntity;
-import com.example.myfilm.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -16,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @Slf4j
@@ -25,7 +21,6 @@ public class ImageService {
     private final ImageRepository imageRepository;
 
     private final PostRepository postRepository;
-
 
     public void savePicture(MultipartFile file, Long postId) throws IOException {
         Image image;
@@ -61,6 +56,4 @@ public class ImageService {
         image.setBytes(file.getBytes());
         return image;
     }
-
-
 }
