@@ -47,8 +47,19 @@ public class MessageService {
         List<MessageDto>messageDtos = new ArrayList<>();
         for (var message: messages)
             messageDtos.add(Mapping.toMessageDto(message, message.getSender()));
-
         return messageDtos;
 
+    }
+
+    public List<MessageDto> receiveMessageFromUser(Long userId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        Optional<UserEntity> userRec = userRepository.findByUsername(currentUserName);
+        Integer userRecId = userRec.get().getId();
+        List<Message>messages = messageRepo.findMessagesByRecAndSend(userRecId, Math.toIntExact(userId));
+        List<MessageDto>messageDtos = new ArrayList<>();
+        for (var message: messages)
+            messageDtos.add(Mapping.toMessageDto(message, message.getSender()));
+        return messageDtos;
     }
 }
