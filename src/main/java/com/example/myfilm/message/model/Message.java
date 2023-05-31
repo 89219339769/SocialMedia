@@ -1,4 +1,4 @@
-package com.example.myfilm.message;
+package com.example.myfilm.message.model;
 
 import com.example.myfilm.user.UserEntity;
 import lombok.AllArgsConstructor;

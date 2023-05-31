@@ -1,6 +1,9 @@
 package com.example.myfilm.message;
 
 
+import com.example.myfilm.message.model.Mapping;
+import com.example.myfilm.message.model.Message;
+import com.example.myfilm.message.model.MessageDto;
 import com.example.myfilm.user.UserEntity;
 import com.example.myfilm.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,14 +27,28 @@ public class MessageService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
         Optional<UserEntity> userSend = userRepository.findByUsername(currentUserName);
-        UserEntity userRes = userRepository.findById(Math.toIntExact(resId))
+        UserEntity userRec = userRepository.findById(Math.toIntExact(resId))
                                            .orElseThrow(() -> new RuntimeException(
                                                    "user with id = " + resId + " not found"));
 
         Message message = new Message();
         message.setSender(userSend.get());
-        message.setRecipient(userRes);
+        message.setRecipient(userRec);
         message.setText(text);
         messageRepo.save( message);
+    }
+
+    public List<MessageDto> receiveMessage() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        Optional<UserEntity> userRec = userRepository.findByUsername(currentUserName);
+
+        List<Message>messages = messageRepo.findAllByResId(userRec.get().getId());
+        List<MessageDto>messageDtos = new ArrayList<>();
+        for (var message: messages)
+            messageDtos.add(Mapping.toMessageDto(message, message.getSender()));
+
+        return messageDtos;
+
     }
 }
