@@ -1,8 +1,10 @@
 package com.example.myfilm.post;
 
 
+import com.example.myfilm.friendship.Followers;
 import com.example.myfilm.image.Image;
 //import com.example.myfilm.image.MappingPost;
+import com.example.myfilm.image.ImageRepository;
 import com.example.myfilm.post.model.Post;
 import com.example.myfilm.post.model.PostInDto;
 import com.example.myfilm.user.UserEntity;
@@ -27,24 +29,13 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
+    private final ImageRepository imageRepository;
+
     public List<Post> listProducts(String title) {
         if (title != null) return postRepository.findByTitle(title);
         return postRepository.findAll();
     }
 
-
-    public void deleteProduct(Long id) {
-        postRepository.deleteById(id);
-    }
-
-    public Post getProductById(Long id) {
-        return postRepository.findById(id).orElse(null);
-    }
-
-
-    public List<Post> findAll() {
-        return postRepository.findAll();
-    }
 
     public void savePost(PostInDto postInDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -58,6 +49,24 @@ public class PostService {
                         .dateOfCreated(LocalDateTime.now())
                         .build();
         postRepository.save(post);
+
+    }
+
+    public void deletePost(Long postId) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        List<Post> posts = postRepository.findPostsByUsername(currentUserName);
+        boolean isPr = false;
+        for (var post : posts) {
+            if (post.getId() == postId) {
+                postRepository.deleteById(postId);
+                isPr = true;
+            }
+        }
+        if (!isPr) {
+            throw new RuntimeException("пост не найден");
+        }
 
     }
 }
