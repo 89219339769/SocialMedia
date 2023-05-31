@@ -42,8 +42,9 @@ public class ImageService {
                                                   "user with id = " + postId + " not found"));
                 image = toImageEntity(file);
                 image.setPost(post);
-                post.setImage(image);
-                imageRepository.save(image);
+                Long id = imageRepository.save(image).getId();
+                post.setImageId(id);
+
                 postRepository.save(post);
                 isPr = true;
             }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,17 +50,18 @@ public class PostService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
 
-       Optional<UserEntity> user = userRepository.findByUsername(currentUserName);
+        //     Optional<UserEntity> user = userRepository.findByUsername(currentUserName);
 //        if (user == null) {
 //            throw new RuntimeException("unable to save post, user does not exist");
 //        }
 
-       Post post = Post.builder()
-            .id(postInDto.getId())
-            .title(postInDto.getTitle())
-            .userName(currentUserName)
-            .description(postInDto.getDescription())
-            .build();
+        Post post = Post.builder()
+                        .id(postInDto.getId())
+                        .title(postInDto.getTitle())
+                        .userName(currentUserName)
+                        .description(postInDto.getDescription())
+                        .dateOfCreated(LocalDateTime.now())
+                        .build();
         postRepository.save(post);
 
     }

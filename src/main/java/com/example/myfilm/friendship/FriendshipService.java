@@ -7,10 +7,14 @@ import com.example.myfilm.user.UserEntity;
 import com.example.myfilm.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -64,8 +68,8 @@ public class FriendshipService {
         friendshipRepo.save(friendship);
     }
 
-   // @Transactional
-    public List<Post> addActivity() {
+    @Transactional
+    public List<Post> addActivity( int from, int size) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
         Optional<UserEntity> userFr = userRepository.findByUsername(currentUserName);
@@ -82,7 +86,11 @@ public class FriendshipService {
         for (var user : users) {
             userNames.add(user.getUsername());
         }
-        List<Post> posts = postRepository.searchAllByUserNames(userNames);
+
+        Pageable pageable = PageRequest.of(from, size, Sort.by(Sort.Direction.ASC, "dateOfCreated"));
+
+
+        List<Post> posts = postRepository.searchAllByUserNames(userNames, pageable);
         return posts;
     }
 }

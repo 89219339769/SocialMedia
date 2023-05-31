@@ -1,6 +1,8 @@
 package com.example.myfilm.post;
 
 
+import com.example.myfilm.image.Image;
+import com.example.myfilm.image.ImageRepository;
 import com.example.myfilm.image.ImageService;
 import com.example.myfilm.post.model.PostInDto;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 //@Controller
 @RequiredArgsConstructor
@@ -24,6 +27,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/post")
 public class PostController {
+
     private final PostService postService;
     private final ImageService imageService;
     @GetMapping("/posts")
@@ -31,20 +35,6 @@ public class PostController {
         model.addAttribute("posts", postService.findAll());
         return "posts.html";
     }
-
-//    @GetMapping("/product/{id}")
-//    public String productInfo(@PathVariable Long id, Model model) {
-//        Post product = productService.getProductById(id);
-//        model.addAttribute("product", product);
-//        model.addAttribute("images", product.getImages());
-//        return "product-info";
-//    }
-
-//    @PostMapping("/product/create")
-//    public String createProduct(@RequestParam("file1") MultipartFile file1, Post product) throws IOException {
-//        postService.saveProduct(product, file1);
-//        return "redirect:/";
-//    }
 
 
     @PostMapping("/addPicture/{postId}")
@@ -61,9 +51,4 @@ public class PostController {
     }
 
 
-//    @PostMapping("/product/delete/{id}")
-//    public String deleteProduct(@PathVariable Long id) {
-//        productService.deleteProduct(id);
-//        return "redirect:/";
-//    }
 }

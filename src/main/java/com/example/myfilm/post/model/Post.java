@@ -41,15 +41,14 @@ public class Post {
 
 
 
-    private LocalDateTime dateOfCreated = LocalDateTime.now();
+    private LocalDateTime dateOfCreated;
 
     @Column(name = "user_name", nullable = false)
     private String userName;
 
 
-    @ManyToOne
-    @JoinColumn(name = "image_id", referencedColumnName = "id")
-    private Image image;
+    @Column(name = "image_id")
+    private Long imageId;
 
 
 }
