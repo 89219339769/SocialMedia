@@ -50,11 +50,6 @@ public class PostService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
 
-        //     Optional<UserEntity> user = userRepository.findByUsername(currentUserName);
-//        if (user == null) {
-//            throw new RuntimeException("unable to save post, user does not exist");
-//        }
-
         Post post = Post.builder()
                         .id(postInDto.getId())
                         .title(postInDto.getTitle())

@@ -87,7 +87,7 @@ public class FriendshipService {
             userNames.add(user.getUsername());
         }
 
-        Pageable pageable = PageRequest.of(from, size, Sort.by(Sort.Direction.ASC, "dateOfCreated"));
+        Pageable pageable = PageRequest.of(from, size, Sort.by(Sort.Direction.DESC, "dateOfCreated"));
 
 
         List<Post> posts = postRepository.searchAllByUserNames(userNames, pageable);
