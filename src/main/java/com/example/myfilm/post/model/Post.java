@@ -14,6 +14,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -38,14 +40,16 @@ public class Post {
     private String description;
 
 
-    private Long previewImageId;
-    private LocalDateTime dateOfCreated;
+
+    private LocalDateTime dateOfCreated = LocalDateTime.now();
 
     @Column(name = "user_name", nullable = false)
     private String userName;
 
 
-
+    @ManyToOne
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    private Image image;
 
 
 }

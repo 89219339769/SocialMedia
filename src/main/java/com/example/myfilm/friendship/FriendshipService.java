@@ -1,6 +1,7 @@
 package com.example.myfilm.friendship;
 
 
+import com.example.myfilm.post.PostRepository;
 import com.example.myfilm.post.model.Post;
 import com.example.myfilm.user.UserEntity;
 import com.example.myfilm.user.UserRepository;
@@ -23,6 +24,8 @@ public class FriendshipService {
 
     private final FriendshipRepo friendshipRepo;
     private final UserRepository userRepository;
+
+    private final PostRepository postRepository;
 
     public void addFriend(Long friendId) {
 
@@ -61,6 +64,7 @@ public class FriendshipService {
         friendshipRepo.save(friendship);
     }
 
+   // @Transactional
     public List<Post> addActivity() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUserName = authentication.getName();
@@ -71,14 +75,14 @@ public class FriendshipService {
         for (var follower : followers) {
             postsId.add(follower.getFollower2().getId());
         }
-        List<Post>usPosts = new ArrayList<>();
 
-        //найти не по номеру пользователей а по username
-        //взять посты из базы и у которых совпадает username в список постов класть
-        List<UserEntity> users = userRepository.findAllById(postsId);
+        List<UserEntity> users = userRepository.searchAllByIdIs(postsId);
+
+        List<String> userNames = new ArrayList<>();
         for (var user : users) {
-            usPosts.add(user.)
-
+            userNames.add(user.getUsername());
         }
+        List<Post> posts = postRepository.searchAllByUserNames(userNames);
+        return posts;
     }
 }
