@@ -19,4 +19,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "SELECT p FROM Post p WHERE p.userName IN :userNames")
     List<Post> searchAllByUserNames(@Param("userNames") Collection<String> userNames,  Pageable pageable);
 
+    @Query("select p from Post p  where p.id = ?1 ")
+    void find(Long postId);
 }
