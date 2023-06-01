@@ -1,5 +1,6 @@
 package com.example.myfilm.message;
 
+import com.example.myfilm.exceptions.NotFoundException;
 import com.example.myfilm.message.model.Mapping;
 import com.example.myfilm.message.model.Message;
 import com.example.myfilm.message.model.MessageDto;
@@ -28,7 +29,7 @@ public class MessageService {
         String currentUserName = authentication.getName();
         Optional<UserEntity> userSend = userRepository.findByUsername(currentUserName);
         UserEntity userRec = userRepository.findById(Math.toIntExact(resId))
-                                           .orElseThrow(() -> new RuntimeException(
+                                           .orElseThrow(() -> new NotFoundException(
                                                    "user with id = " + resId + " not found"));
 
         Message message = new Message();

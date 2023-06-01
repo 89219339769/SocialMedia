@@ -1,6 +1,7 @@
 package com.example.myfilm.friendship;
 
 
+import com.example.myfilm.exceptions.NotFoundException;
 import com.example.myfilm.post.PostRepository;
 import com.example.myfilm.post.model.Post;
 import com.example.myfilm.user.UserEntity;
@@ -38,7 +39,7 @@ public class FriendshipService {
                                            .orElseThrow(() -> new RuntimeException(
                                                    "user with id = " + friendId + " not found"));
         if (friendId == userFr.get().getId()) {
-            throw new RuntimeException("you can't be friends with yourself");
+            throw new NotFoundException("you can't be friends with yourself");
         }
         followers.setFollower1(userFr.get());
         followers.setFollower2(friend2);
@@ -51,13 +52,13 @@ public class FriendshipService {
         String currentUserName = authentication.getName();
         Optional<UserEntity> userFr = userRepository.findByUsername(currentUserName);
         UserEntity friend2 = userRepository.findById(Math.toIntExact(friendId))
-                                           .orElseThrow(() -> new RuntimeException(
+                                           .orElseThrow(() -> new NotFoundException(
                                                    "user with id = " + friendId + " not found"));
 
         Integer UserFr = userFr.get().getId();
         Integer UserFr2 = friend2.getId();
         followersRepo.findByFolIdAndId(UserFr2, UserFr)
-                     .orElseThrow(() -> new RuntimeException("user with id = " + friendId + " not found"));
+                     .orElseThrow(() -> new NotFoundException("user with id = " + friendId + " not found"));
 
         Friendship friendship = new Friendship();
         friendship.setFriend1(userFr.get());

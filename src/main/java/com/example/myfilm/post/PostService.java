@@ -1,5 +1,6 @@
 package com.example.myfilm.post;
 
+import com.example.myfilm.exceptions.NotFoundException;
 import com.example.myfilm.post.model.Post;
 import com.example.myfilm.post.model.PostInDto;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +52,7 @@ public class PostService {
             }
         }
         if (!isPr) {
-            throw new RuntimeException("post not found");
+            throw new NotFoundException("post not found");
         }
     }
 
@@ -73,7 +74,7 @@ public class PostService {
             }
         }
         if (!isPr) {
-            throw new RuntimeException("post not found, not possible to update");
+            throw new NotFoundException("post not found, not possible to update");
         }
     }
 }
